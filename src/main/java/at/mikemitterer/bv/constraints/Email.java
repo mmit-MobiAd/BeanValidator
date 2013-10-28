@@ -15,14 +15,13 @@ import java.lang.annotation.Target;
 
 
 /**
- *
  * @author Jiren
  */
 @Constraint(validator = ValidateEmail.class)
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
+@Target({ElementType.FIELD, ElementType.METHOD})
 public @interface Email {
-  
+
     boolean mandatory() default true;
 
     String message();

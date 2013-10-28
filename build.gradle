@@ -44,8 +44,8 @@ dependencies {
     compile     group: 'com.google.inject.extensions',  name: 'guice-assistedinject',   version: guiceVersion
     compile     group: 'joda-time', 				    name: 'joda-time', 				version: jodaTimeVersion
 
-    compile     group: 'org.slf4j',                     name: 'slf4j-log4j12',          version: slf4jVersion
-    compile     group: 'log4j', 						name: 'log4j', 					version: log4JVersion
+    //compile     group: 'org.slf4j',                     name: 'slf4j-log4j12',          version: slf4jVersion
+    //compile     group: 'log4j', 						name: 'log4j', 					version: log4JVersion
 
 	testCompile group: 'junit',                         name: 'junit',                  version: junitVersion
     testCompile group: 'org.mockito', 					name: 'mockito-all', 			version: mockitoVersion

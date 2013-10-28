@@ -20,7 +20,7 @@ import java.lang.annotation.Target;
 
 @Constraint(validator = ValidateNotNull.class)
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
+@Target({ElementType.FIELD, ElementType.METHOD})
 public @interface NotNull  {
 
     String message();

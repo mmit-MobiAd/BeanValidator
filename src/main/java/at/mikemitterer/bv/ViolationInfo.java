@@ -6,6 +6,8 @@ package at.mikemitterer.bv;
 public interface ViolationInfo<T> {
     public String getMessag();
 
+    public String getMessageTemplate();
+
     public Object getInvalidValue();
 
     public String getFieldName();

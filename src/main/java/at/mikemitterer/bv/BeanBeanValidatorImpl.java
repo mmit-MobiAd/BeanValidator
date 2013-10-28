@@ -84,16 +84,16 @@ public class BeanBeanValidatorImpl implements BeanValidator {
             try {
                 valueObj = annotationMetaData.getMethod().invoke(obj, EMPTY_CLASS_ARRAY);
             } catch (IllegalAccessException ex) {
-                logger.error("validate faild, Error: {}", ex.toString());
+                logger.error("validate failed, Error: {}", ex.toString());
 
             } catch (IllegalArgumentException ex) {
-                logger.error("validate faild, Error: {}", ex.toString());
+                logger.error("validate failed, Error: {}", ex.toString());
 
             } catch (InvocationTargetException ex) {
-                logger.error("validate faild, Error: {}", ex.toString());
+                logger.error("validate failed, Error: {}", ex.toString());
 
             } catch (Exception ex) {
-                logger.error("validate faild, Error: {}", ex.toString());
+                logger.error("validate failed, Error: {}", ex.toString());
             }
 
             for (Annotation annotation : annotations) {
@@ -109,7 +109,7 @@ public class BeanBeanValidatorImpl implements BeanValidator {
 
 
                     } catch (Exception ex) {
-                        logger.error("validate faild, Error: {}", ex.toString());
+                        logger.error("validate failed, Error: {}", ex.toString());
                     }
                 } else {
                     logger.warn("Validator not registered for: {}", annotation);

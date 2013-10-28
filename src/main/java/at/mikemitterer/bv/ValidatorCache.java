@@ -16,7 +16,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -91,6 +91,7 @@ final class ValidatorCache<P> {
     // --------------------------------------------------------------------------------------------
     // private
     // --------------------------------------------------------------------------------------------
+
     /**
      * Get field Get Method name.
      *
@@ -121,15 +122,19 @@ final class ValidatorCache<P> {
      * Get Annotation with AValidation.
      */
     private static Annotation[] getAValidates(Field field) {
+        return filterConstraintAnnotations(field.getDeclaredAnnotations());
+    }
 
-        Annotation[] tempAnnotations = field.getDeclaredAnnotations();
-        //Annotation[] tempAnnotations = field.getAnnotations();
+    private static Annotation[] getAValidates(Method method) {
+        return filterConstraintAnnotations(method.getDeclaredAnnotations());
+    }
 
+    private static Annotation[] filterConstraintAnnotations(final Annotation[] annotations) {
         ArrayList<Annotation> list = new ArrayList<Annotation>();
 
-        for (int i = 0; i < tempAnnotations.length; i++) {
+        for (int i = 0; i < annotations.length; i++) {
 
-            Annotation annotation = tempAnnotations[i];
+            Annotation annotation = annotations[i];
             if (annotation.annotationType().isAnnotationPresent(Constraint.class)) {
                 list.add(annotation);
             }
@@ -154,19 +159,19 @@ final class ValidatorCache<P> {
 
             validatorsMap.put(vAnnotationClass, constraint.validator().newInstance());
 
-            logger.debug("Registered Validator {}",annotation.toString());
+            logger.debug("Registered Validator {}", annotation.toString());
 
         } catch (InstantiationException ex) {
-            logger.error("registerValidator faild, Error: {}", ex.toString());
+            logger.error("registerValidator failed, Error: {}", ex.toString());
 
         } catch (IllegalAccessException ex) {
-            logger.error("registerValidator faild, Error: {}", ex.toString());
+            logger.error("registerValidator failed, Error: {}", ex.toString());
         }
 
     }
 
     /**
-     * Add class fileds 'get'(Getter) Methods and field annotation in Map.
+     * Add class fields 'get'(Getter) Methods and field annotation in Map.
      * - This method check annotation is annotated by 'AValidation' annotation.
      * Using this check at run time checking the annotation is for validation
      * or not.
@@ -174,57 +179,91 @@ final class ValidatorCache<P> {
      * - This method add field into cache only if it's getter method has public
      * modifier.
      * <p/>
-     * - This method check that valiator already exist in validators map. If not
+     * - This method check that validator already exist in validators map. If not
      * exist in it than register that validator.So no need to register validator
-     * seperately it loaded on demand basis.
+     * separately it loaded on demand basis.
      */
-    private static void addClass(Class klass) {
+    private static void addClass(final Class klass) {
 
         try {
+            Map<String, AnnotationMetaData> methodMap = new HashMap<String, AnnotationMetaData>();
 
-            Field[] fields = klass.getDeclaredFields();
-            List<AnnotationMetaData> aMethodList = new ArrayList<AnnotationMetaData>();
+            //List<AnnotationMetaData> methodList = new ArrayList<AnnotationMetaData>();
 
-            for (int i = 0; i < fields.length; i++) {
+            addMethodsToMethodList(klass, methodMap);
+            addFieldsToMethodList(klass, methodMap);
 
-                Annotation[] annotations = getAValidates(fields[i]);
-
-                if (annotations.length != 0) {
-
-                    for (int j = 0; j < annotations.length; j++) {
-                        if (!validatorsMap.containsKey(annotations[j].annotationType())) {
-                            registerValidator(annotations[j]);
-                        }
-                    }
-
-
-                    try {
-
-                        final String methodName = getGetMethod(fields[i]);
-                        Method method = klass.getDeclaredMethod(methodName);
-
-                        if (Modifier.isPublic(method.getModifiers())) {
-                            aMethodList.add(new AnnotationMetaData(fields[i],method, annotations));
-                        } else {
-                            logger.warn("Field getter method has not public modifier: {}", fields[i].getName());
-                        }
-
-                    } catch (NoSuchMethodException ex) {
-                        logger.error("addClass faild, Error: {}", ex.toString());
-                    }
-
-                }
-            }
-
-            if (!aMethodList.isEmpty()) {
+            if (!methodMap.isEmpty()) {
 
                 //Convert list into array and store in to map.
-                classMethodsMap.put(klass.getName(), aMethodList.toArray(new AnnotationMetaData[aMethodList.size()]));
+                classMethodsMap.put(klass.getName(), methodMap.values().toArray(new AnnotationMetaData[methodMap.size()]));
             }
         } catch (Exception ex) {
-            logger.error("addClass faild, Error: {}", ex.toString());
+            logger.error("addClass failed, Error: {}", ex.toString());
         }
 
+    }
+
+
+    private static void addMethodsToMethodList(final Class klass, final Map<String, AnnotationMetaData> methodMap) {
+        Method[] methods = klass.getDeclaredMethods();
+
+        for (int i = 0; i < methods.length; i++) {
+            final Method method = methods[i];
+            final Annotation[] annotations = getAValidates(method);
+
+            if (annotations.length != 0) {
+
+                for (int j = 0; j < annotations.length; j++) {
+                    if (!validatorsMap.containsKey(annotations[j].annotationType())) {
+                        registerValidator(annotations[j]);
+                    }
+                }
+
+                if (Modifier.isPublic(method.getModifiers())) {
+                    methodMap.put(method.getName(), new AnnotationMetaData(method, annotations));
+                } else {
+                    logger.warn("Getter {} is not public...", method.getName());
+                }
+
+            }
+        }
+    }
+
+    private static void addFieldsToMethodList(final Class klass, Map<String, AnnotationMetaData> methodMap) {
+        Field[] fields = klass.getDeclaredFields();
+        for (int i = 0; i < fields.length; i++) {
+            final Field field = fields[i];
+            final Annotation[] annotations = getAValidates(field);
+
+            if (annotations.length != 0) {
+
+                for (int j = 0; j < annotations.length; j++) {
+                    if (!validatorsMap.containsKey(annotations[j].annotationType())) {
+                        registerValidator(annotations[j]);
+                    }
+                }
+
+                try {
+
+                    final String methodName = getGetMethod(field);
+                    Method method = klass.getDeclaredMethod(methodName);
+
+                    if (Modifier.isPublic(method.getModifiers())) {
+                        if (!methodMap.containsKey(methodName)) {
+                            methodMap.put(methodName, new AnnotationMetaData(field, method, annotations));
+                        } else {
+                            logger.warn("Field annotation for {} is already in defined with it's getter {}", field.getName(),methodName);
+                        }
+                    } else {
+                        logger.warn("Field getter method has not public modifier: {}", field.getName());
+                    }
+
+                } catch (NoSuchMethodException ex) {
+                    logger.error("addClass failed, Error: {}", ex.toString());
+                }
+            }
+        }
     }
 
 }

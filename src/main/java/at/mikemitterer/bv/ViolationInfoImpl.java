@@ -24,6 +24,11 @@ class ViolationInfoImpl<T> implements ViolationInfo<T> {
 
     @Override
     public String getMessag() {
+        return message.replace("%value%", value());
+    }
+
+    @Override
+    public String getMessageTemplate() {
         return message;
     }
 
@@ -45,4 +50,8 @@ class ViolationInfoImpl<T> implements ViolationInfo<T> {
     // --------------------------------------------------------------------------------------------
     // private
     // --------------------------------------------------------------------------------------------
+
+    private String value() {
+        return invalidValue != null ? invalidValue.toString() : "null";
+    }
 }

@@ -17,17 +17,30 @@ import java.lang.reflect.Method;
 public class AnnotationMetaData {
 
     private final Field        field;
+    private       Boolean      fromField;
     private final Method       method;
     private       Annotation[] annotation;
 
     public AnnotationMetaData(final Field field, final Method method, final Annotation[] annotations) {
+        fromField = true;
         this.field = field;
         this.method = method;
         this.annotation = annotations;
     }
 
-    public Field getField() {
-        return field;
+    public AnnotationMetaData(final Method method, final Annotation[] annotation) {
+        fromField = false;
+        field = null;
+        this.method = method;
+        this.annotation = annotation;
+    }
+
+    public String getFieldName() {
+        if (fromField) {
+            return field.getName();
+        } else {
+            return method.getName();
+        }
     }
 
     public Method getMethod() {

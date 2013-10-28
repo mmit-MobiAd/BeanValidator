@@ -20,7 +20,7 @@ import java.lang.annotation.Target;
 
 @Constraint(validator = ValidateMinLength.class)
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
+@Target({ElementType.FIELD, ElementType.METHOD})
 public @interface MinLength {
 
        int value();

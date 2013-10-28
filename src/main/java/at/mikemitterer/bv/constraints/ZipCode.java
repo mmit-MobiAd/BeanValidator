@@ -18,7 +18,7 @@ import java.lang.annotation.Target;
  */
 @Constraint(validator = ValidateZipCode.class)
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
+@Target({ElementType.FIELD, ElementType.METHOD})
 public @interface ZipCode {
 
     String value();
