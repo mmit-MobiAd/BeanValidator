@@ -57,8 +57,15 @@ dependencies {
     testCompile group: 'log4j', 						name: 'log4j', 					version: log4JVersion
 }
 
+task sourcesJar(type: Jar, dependsOn: classes) {
+	classifier 'sources'
+    baseName = baseName.toLowerCase()
+	from sourceSets.main.allSource
+}
+
 artifacts {
 	toPublicRepo jar
+	toPublicRepo sourcesJar
 	}
 
 // Intern (private)
