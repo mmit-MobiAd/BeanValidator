@@ -47,12 +47,21 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-26/filestore/com.google.inject/guice/3.0/jar/9d84f15fe35e2c716a02979fb62f50a29f38aefa/guice-3.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-26/filestore/joda-time/joda-time/2.2/jar/a5f29a7acaddea3f4af307e8cf2d0cc82645fd7d/joda-time-2.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-26/filestore/com.google.inject/guice/3.0/source/d117c4481f64955cb1862ed38cb568add2f5fe05/guice-3.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-26/filestore/joda-time/joda-time/2.2/source/ad622e3cfe39319ea53b183aa5615f96ff346584/joda-time-2.2-sources.jar!/" />
         </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-26/filestore/com.google.inject/guice/3.0/jar/28586dc97c525501329d9a242fc3402041e3572d/guice-3.0-no_aop.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
@@ -63,17 +72,6 @@
         <JAVADOC />
         <SOURCES>
           <root url="jar://$USER_HOME$/.gradle/caches/artifacts-26/filestore/com.google.inject.extensions/guice-assistedinject/3.0/source/b2d47c8583a01b6748d68f7d1786496685b94784/guice-assistedinject-3.0-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-26/filestore/joda-time/joda-time/2.2/jar/a5f29a7acaddea3f4af307e8cf2d0cc82645fd7d/joda-time-2.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-26/filestore/joda-time/joda-time/2.2/source/ad622e3cfe39319ea53b183aa5615f96ff346584/joda-time-2.2-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

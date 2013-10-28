@@ -44,9 +44,16 @@ dependencies {
     //compile 	group: 'org.slf4j',                     name: 'slf4j-simple',           version: slf4jVersion
 	compile 	group: 'org.apache.commons',            name: 'commons-lang3',          version: commonsLang3Version
     compile     group: 'commons-collections', 		    name: 'commons-collections', 	version: commonsCollection
-    compile     group: 'com.google.inject', 		    name: 'guice', 					version: guiceVersion
-    compile     group: 'com.google.inject.extensions',  name: 'guice-assistedinject',   version: guiceVersion
     compile     group: 'joda-time', 				    name: 'joda-time', 				version: jodaTimeVersion
+
+    // GUICE
+    compile ('com.google.inject:guice:' + guiceVersion +  ':no_aop') {
+        exclude module: 'aopalliance'
+        exclude module: 'cglib'
+    }
+    compile('com.google.inject.extensions:guice-assistedinject:' + guiceVersion) {
+        exclude module: 'guice'
+    }
 
     //compile     group: 'org.slf4j',                     name: 'slf4j-log4j12',          version: slf4jVersion
     //compile     group: 'log4j', 						name: 'log4j', 					version: log4JVersion
