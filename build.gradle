@@ -13,6 +13,10 @@ targetCompatibility = JavaVersion.VERSION_1_6
 
 buildDir = "target/\${version}/"
 
+configurations {
+    toPublicRepo
+}
+
 jar {
 	baseName = baseName.toLowerCase()
 }
@@ -53,4 +57,19 @@ dependencies {
     testCompile group: 'log4j', 						name: 'log4j', 					version: log4JVersion
 }
 
-uploadArchives { /* Werden in init.gradle gesetzt */ }
+artifacts {
+	toPublicRepo jar
+	}
+
+// Intern (private)
+uploadArchives { /* Wird in init.gradle gesetzt */ }
+
+// JAR + Source
+uploadToPublicRepo {
+	repositories {
+		mavenDeployer {
+			// My local Maven repository
+			repository(url: uri("file:///Volumes/programming/Maven/public.maven.repository/"))
+		}
+	}
+}
