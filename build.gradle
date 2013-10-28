@@ -1,0 +1,56 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'idea'	
+
+version = '0.1'
+group = 'at.mikemitterer'
+
+/* define the valid syntax level for source files */
+sourceCompatibility = JavaVersion.VERSION_1_6
+
+/* define binary compatiblity version */
+targetCompatibility = JavaVersion.VERSION_1_6
+
+buildDir = "target/\${version}/"
+
+jar {
+	baseName = baseName.toLowerCase()
+}
+
+//-------------------------------------------------------------------------------------------------
+// Library Versions
+
+ext {
+    slf4jVersion 				= "1.6.4"
+    commonsLang3Version			= "3.1"
+    commonsCollection			= "3.2.1"
+    guiceVersion				= "3.0"
+    jodaTimeVersion				= "2.2"
+
+    // Unit-Tests
+    junitVersion				= "4.11"
+    mockitoVersion				= "1.9.5"
+    log4JVersion				= "1.2.16"
+}
+
+repositories { /* Werden in init.gradle gesetzt */ }
+
+dependencies {
+	compile 	group: 'org.slf4j',                     name: 'slf4j-api',              version: slf4jVersion
+    //compile 	group: 'org.slf4j',                     name: 'slf4j-simple',           version: slf4jVersion
+	compile 	group: 'org.apache.commons',            name: 'commons-lang3',          version: commonsLang3Version
+    compile     group: 'commons-collections', 		    name: 'commons-collections', 	version: commonsCollection
+    compile     group: 'com.google.inject', 		    name: 'guice', 					version: guiceVersion
+    compile     group: 'com.google.inject.extensions',  name: 'guice-assistedinject',   version: guiceVersion
+    compile     group: 'joda-time', 				    name: 'joda-time', 				version: jodaTimeVersion
+
+    compile     group: 'org.slf4j',                     name: 'slf4j-log4j12',          version: slf4jVersion
+    compile     group: 'log4j', 						name: 'log4j', 					version: log4JVersion
+
+	testCompile group: 'junit',                         name: 'junit',                  version: junitVersion
+    testCompile group: 'org.mockito', 					name: 'mockito-all', 			version: mockitoVersion
+	testCompile group: 'org.slf4j',                     name: 'slf4j-log4j12',          version: slf4jVersion
+    testCompile group: 'log4j', 						name: 'log4j', 					version: log4JVersion
+}
+
+uploadArchives { /* Werden in init.gradle gesetzt */ }
