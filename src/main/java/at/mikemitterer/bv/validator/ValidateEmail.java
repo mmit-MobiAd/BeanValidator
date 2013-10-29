@@ -19,10 +19,10 @@ public class ValidateEmail extends ValidateBasePattern implements Validate<Strin
             "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     private              Pattern pattern       = Pattern.compile(EMAIL_PATTERN);
 
-    public boolean validate(final AnnotationMetaData method,String email, Email aEmail, ViolationInfoHandler validationMsges) {
+    public boolean validate(final AnnotationMetaData method,String email, Email annotation, ViolationInfoHandler validationMsges) {
 
-        if (!validatePattern(email, pattern, aEmail.mandatory())) {
-            validationMsges.addMessage(method,aEmail.message(),email);
+        if (!validatePattern(email, pattern, annotation.mandatory())) {
+            validationMsges.addMessage(method,annotation.message(),email);
             return false;
         }
 

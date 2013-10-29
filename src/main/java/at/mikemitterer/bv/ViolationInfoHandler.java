@@ -25,6 +25,10 @@ public class ViolationInfoHandler<T> {
         violationInfos.add(new ViolationInfoImpl<T>(rootBean,method.getMethod().getName(), message, invalidValue));
     }
 
+    public void addMessage(final String methodName, final String message,final Object invalidValue) {
+        violationInfos.add(new ViolationInfoImpl<T>(rootBean,methodName, message, invalidValue));
+    }
+
     public List<ViolationInfo<T>> getViolationInfos() {
         return violationInfos;
     }

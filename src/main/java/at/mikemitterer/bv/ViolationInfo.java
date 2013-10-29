@@ -10,7 +10,7 @@ public interface ViolationInfo<T> {
 
     public Object getInvalidValue();
 
-    public String getFieldName();
+    public String getMethodName();
 
     public T getRootBean();
 

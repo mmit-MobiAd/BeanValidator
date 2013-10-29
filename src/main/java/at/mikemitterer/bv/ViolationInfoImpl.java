@@ -38,7 +38,7 @@ class ViolationInfoImpl<T> implements ViolationInfo<T> {
     }
 
     @Override
-    public String getFieldName() {
+    public String getMethodName() {
         return methodName;
     }
 
