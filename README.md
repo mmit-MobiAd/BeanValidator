@@ -1,12 +1,9 @@
-BeanValidator
-=============
+# BeanValidator
 Light weight Annotation base bean validation framework in which user can  plug own custom validator easily.
 
 For further information how to use this library please have a look at the [tests][1] I made.
 
-License
-========
-
+## License
     Copyright 2013 Michael Mitterer, IT-Consulting and Development Limited,
     Austrian Branch
 
