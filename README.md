@@ -25,7 +25,7 @@ License
 If this plugin is helpful for you - please [(Circle)](http://gplus.mikemitterer.at/) me.
 
 Thank you
-==
+=
 to JIRen, who did the main work which I forked. ([BeanValidation][1])
 
 [1]: https://github.com/MikeMitterer/BeanValidator/blob/master/src/test/java/at/mikemitterer/bv/BeanValidatorTest.java
