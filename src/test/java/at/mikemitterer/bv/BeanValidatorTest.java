@@ -49,6 +49,17 @@ public class BeanValidatorTest extends Assert {
     }
 
     @Test
+    public void testAgeInAbstractBaseClass() throws Exception {
+        final User user = new User(3,"Mike", "joe@test.com", "+43 4562 282872-4");
+
+        final BeanValidator beanValidator = BeanBeanValidatorImpl.getInstance();
+
+        final List<ViolationInfo<User>> violationInfos = beanValidator.validate(user);
+        assertEquals(1,violationInfos.size());
+        assertEquals(violationInfos.get(0).getMessage(),"Age must be between 5 and 99 years");
+    }
+
+    @Test
     public void testCity() throws Exception {
         final City city = new City("", null);
 
@@ -77,7 +88,7 @@ public class BeanValidatorTest extends Assert {
 
         final List<ViolationInfo<UserInCity>> violationInfos = beanValidator.validate(userInCity);
         assertEquals(1,violationInfos.size());
-        assertEquals("City must be valid",violationInfos.get(0).getMessage());
+        assertEquals("City must be valid", violationInfos.get(0).getMessage());
     }
 
     // --------------------------------------------------------------------------------------------
@@ -124,7 +135,21 @@ public class BeanValidatorTest extends Assert {
         }
     }
 
-    private static class User {
+    private static abstract class Person {
+        private final int age;
+
+        protected Person(final int age) {
+            this.age = age;
+        }
+
+        // does not work - Annotations can not be inherited
+        @Range(start = 5, end = 99, message = "Age must be between 5 and 99 years")
+        public int getAge() {
+            return age;
+        }
+    }
+
+    private static class User extends Person {
 
         @NotEmpty(message = "Name must not be empty")
         @MinLength(value = 4, message = "Name lenght must be at least 4 characters...")
@@ -135,7 +160,17 @@ public class BeanValidatorTest extends Assert {
         @Phone(message = "%value% is not a valid phone number", value = "")
         private final String phone;
 
+        private User(final int age, final String name, final String eMail, final String phone) {
+            super(age);
+
+            this.name = name;
+            this.eMail = eMail;
+            this.phone = phone;
+        }
+
         private User(final String name, final String eMail, final String phone) {
+            super(33);
+
             this.name = name;
             this.eMail = eMail;
             this.phone = phone;
@@ -152,6 +187,12 @@ public class BeanValidatorTest extends Assert {
 
         public String getPhone() {
             return phone;
+        }
+
+        @Override
+        @Range(start = 5, end = 99, message = "Age must be between 5 and 99 years")
+        public int getAge() {
+            return super.getAge();
         }
     }
 }

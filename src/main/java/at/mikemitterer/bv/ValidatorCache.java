@@ -122,11 +122,11 @@ final class ValidatorCache<P> {
      * Get Annotation with AValidation.
      */
     private static Annotation[] getAValidates(Field field) {
-        return filterConstraintAnnotations(field.getDeclaredAnnotations());
+        return filterConstraintAnnotations(field.getAnnotations());
     }
 
     private static Annotation[] getAValidates(Method method) {
-        return filterConstraintAnnotations(method.getDeclaredAnnotations());
+        return filterConstraintAnnotations(method.getAnnotations());
     }
 
     private static Annotation[] filterConstraintAnnotations(final Annotation[] annotations) {
