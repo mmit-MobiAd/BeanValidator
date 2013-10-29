@@ -25,7 +25,7 @@ public class BeanValidatorTest extends Assert {
 
         final List<ViolationInfo<User>> violationInfos = beanValidator.validate(user);
         assertEquals(1,violationInfos.size());
-        assertEquals(violationInfos.get(0).getMessag(),"Name must not be empty");
+        assertEquals(violationInfos.get(0).getMessage(),"Name must not be empty");
     }
 
     @Test
@@ -36,7 +36,7 @@ public class BeanValidatorTest extends Assert {
 
         final List<ViolationInfo<User>> violationInfos = beanValidator.validate(user);
         assertEquals(1,violationInfos.size());
-        assertEquals(violationInfos.get(0).getMessag(),"+43 (0) 4562 282872-4 is not a valid phone number");
+        assertEquals(violationInfos.get(0).getMessage(),"+43 (0) 4562 282872-4 is not a valid phone number");
         assertEquals(violationInfos.get(0).getMessageTemplate(),"%value% is not a valid phone number");
     }
 
@@ -48,7 +48,7 @@ public class BeanValidatorTest extends Assert {
 
         final List<ViolationInfo<User>> violationInfos = beanValidator.validate(user);
         assertEquals(1,violationInfos.size());
-        assertEquals(violationInfos.get(0).getMessag(),"Name lenght must be at least 4 characters...");
+        assertEquals(violationInfos.get(0).getMessage(),"Name lenght must be at least 4 characters...");
     }
 
     // --------------------------------------------------------------------------------------------

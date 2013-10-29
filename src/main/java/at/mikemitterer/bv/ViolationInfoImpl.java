@@ -23,7 +23,7 @@ class ViolationInfoImpl<T> implements ViolationInfo<T> {
     }
 
     @Override
-    public String getMessag() {
+    public String getMessage() {
         return message.replace("%value%", value());
     }
 
