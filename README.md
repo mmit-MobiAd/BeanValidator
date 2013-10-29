@@ -4,10 +4,6 @@ Light weight Annotation base bean validation framework in which user can  plug o
 
 For further information how to use this library please have a look at the [tests][] I made.
 
-Thank you
-========
-to JIRen, who did the main work which I forked. ([BeanValidation][1])
-
 License
 ========
 
@@ -27,6 +23,10 @@ License
     governing permissions and limitations under the License.
 
 If this plugin is helpful for you - please [(Circle)](http://gplus.mikemitterer.at/) me.
+
+Thank you
+==
+to JIRen, who did the main work which I forked. ([BeanValidation][1])
 
 [1]: https://github.com/MikeMitterer/BeanValidator/blob/master/src/test/java/at/mikemitterer/bv/BeanValidatorTest.java
 [50]: https://github.com/jiren/BeanValidation
