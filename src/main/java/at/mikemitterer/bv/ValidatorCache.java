@@ -61,7 +61,7 @@ final class ValidatorCache<P> {
 
         String className = object.getClass().getName();
         if (!classMethodsMap.containsKey(className)) {
-            addClass(object.getClass());
+            addFieldsAndMethodsFromClass(object.getClass());
         }
         return classMethodsMap.get(className);
     }
@@ -120,6 +120,11 @@ final class ValidatorCache<P> {
 
     /**
      * Get Annotation with AValidation.
+     *
+     * - getAnnotations basically gets all annotations that are also inherited from the parent class.
+     * - getDeclaredAnnotations gets annotations declared ONLY on the class
+     *
+     * - See more at: http://djitz.com/neu-mscs/java-reflection-notes-getdeclaredannotations-vs-getannotations-method/#sthash.QxnGlgBC.dpuf
      */
     private static Annotation[] getAValidates(Field field) {
         return filterConstraintAnnotations(field.getAnnotations());
@@ -183,7 +188,7 @@ final class ValidatorCache<P> {
      * exist in it than register that validator.So no need to register validator
      * separately it loaded on demand basis.
      */
-    private static void addClass(final Class klass) {
+    private static void addFieldsAndMethodsFromClass(final Class klass) {
 
         try {
             Map<String, AnnotationMetaData> methodMap = new HashMap<String, AnnotationMetaData>();
@@ -199,14 +204,14 @@ final class ValidatorCache<P> {
                 classMethodsMap.put(klass.getName(), methodMap.values().toArray(new AnnotationMetaData[methodMap.size()]));
             }
         } catch (Exception ex) {
-            logger.error("addClass failed, Error: {}", ex.toString());
+            logger.error("addFieldsAndMethodsFromClass failed, Error: {}", ex.toString());
         }
 
     }
 
 
     private static void addMethodsToMethodList(final Class klass, final Map<String, AnnotationMetaData> methodMap) {
-        Method[] methods = klass.getDeclaredMethods();
+        Method[] methods = klass.getMethods();
 
         for (int i = 0; i < methods.length; i++) {
             final Method method = methods[i];
@@ -231,7 +236,7 @@ final class ValidatorCache<P> {
     }
 
     private static void addFieldsToMethodList(final Class klass, Map<String, AnnotationMetaData> methodMap) {
-        Field[] fields = klass.getDeclaredFields();
+        Field[] fields = klass.getFields();
         for (int i = 0; i < fields.length; i++) {
             final Field field = fields[i];
             final Annotation[] annotations = getAValidates(field);
@@ -253,14 +258,14 @@ final class ValidatorCache<P> {
                         if (!methodMap.containsKey(methodName)) {
                             methodMap.put(methodName, new AnnotationMetaData(field, method, annotations));
                         } else {
-                            logger.warn("Field annotation for {} is already in defined with it's getter {}", field.getName(),methodName);
+                            logger.warn("Field annotation for {} is already defined with it's getter {}", field.getName(),methodName);
                         }
                     } else {
                         logger.warn("Field getter method has not public modifier: {}", field.getName());
                     }
 
                 } catch (NoSuchMethodException ex) {
-                    logger.error("addClass failed, Error: {}", ex.toString());
+                    logger.error("addFieldsAndMethodsFromClass failed, Error: {}", ex.toString());
                 }
             }
         }

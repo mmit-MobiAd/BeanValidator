@@ -153,12 +153,12 @@ public class BeanValidatorTest extends Assert {
 
         @NotEmpty(message = "Name must not be empty")
         @MinLength(value = 4, message = "Name lenght must be at least 4 characters...")
-        private final String name;
+        public final String name;
 
         private final String eMail;
 
         @Phone(message = "%value% is not a valid phone number", value = "")
-        private final String phone;
+        public final String phone;
 
         private User(final int age, final String name, final String eMail, final String phone) {
             super(age);
@@ -189,10 +189,10 @@ public class BeanValidatorTest extends Assert {
             return phone;
         }
 
-        @Override
-        @Range(start = 5, end = 99, message = "Age must be between 5 and 99 years")
-        public int getAge() {
-            return super.getAge();
-        }
+//        @Override
+//        @Range(start = 5, end = 99, message = "Age must be between 5 and 99 years")
+//        public int getAge() {
+//            return super.getAge();
+//        }
     }
 }
