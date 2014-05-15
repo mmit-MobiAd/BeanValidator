@@ -91,6 +91,29 @@ public class BeanValidatorTest extends Assert {
         assertEquals("City must be valid", violationInfos.get(0).getMessage());
     }
 
+    @Test
+    public void testUUID() throws Exception {
+        final User user = new User("", "office@mikemitterer.at", "+43 4562 282872-4");
+        final BeanValidator beanValidator = BeanBeanValidatorImpl.getInstance();
+
+        final List<ViolationInfo<User>> violationInfos = beanValidator.validate(user);
+        assertEquals(1,violationInfos.size());
+        assertEquals(violationInfos.get(0).getMessage(),"Name must not be empty");
+
+        user.userID = "123";
+
+        final List<ViolationInfo<User>> violationInfosWithUUID = beanValidator.validate(user);
+        assertEquals(2,violationInfosWithUUID.size());
+
+        boolean found = false;
+        for(final ViolationInfo<User> vi : violationInfosWithUUID) {
+            if(vi.getMessage().compareTo("UserID must be a UUID") == 0) {
+                found = true;
+            }
+        }
+        assertTrue(found);
+    }
+
     // --------------------------------------------------------------------------------------------
     // private
     // --------------------------------------------------------------------------------------------
@@ -150,6 +173,8 @@ public class BeanValidatorTest extends Assert {
     }
 
     private static class User extends Person {
+        @Uuid(message = "UserID must be a UUID")
+        public String userID;
 
         @NotEmpty(message = "Name must not be empty")
         @MinLength(value = 4, message = "Name lenght must be at least 4 characters...")
@@ -166,6 +191,7 @@ public class BeanValidatorTest extends Assert {
             this.name = name;
             this.eMail = eMail;
             this.phone = phone;
+            this.userID = "135ea20d-f57b-4960-b544-ceafde88d9b8";
         }
 
         private User(final String name, final String eMail, final String phone) {
@@ -174,6 +200,7 @@ public class BeanValidatorTest extends Assert {
             this.name = name;
             this.eMail = eMail;
             this.phone = phone;
+            userID = "135ea20d-f57b-4960-b544-ceafde88d9b8";
         }
 
         public String getName() {
@@ -189,7 +216,11 @@ public class BeanValidatorTest extends Assert {
             return phone;
         }
 
-//        @Override
+        public String getUserID() {
+            return userID;
+        }
+
+        //        @Override
 //        @Range(start = 5, end = 99, message = "Age must be between 5 and 99 years")
 //        public int getAge() {
 //            return super.getAge();

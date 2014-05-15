@@ -6,7 +6,7 @@ package at.mikemitterer.bv.validator;
 
 import at.mikemitterer.bv.AnnotationMetaData;
 import at.mikemitterer.bv.ViolationInfoHandler;
-import at.mikemitterer.bv.constraints.Pattern;
+import at.mikemitterer.bv.constraints.Uuid;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,9 +14,9 @@ import java.util.logging.Logger;
 /**
  * @author Jiren
  */
-public class ValidatePattern implements Validate<String, Pattern> {
+public class ValidateUuid implements Validate<String, Uuid> {
 
-    public boolean validate(final AnnotationMetaData method,String value, Pattern annotation, ViolationInfoHandler validationMsges) {
+    public boolean validate(final AnnotationMetaData method,String value, Uuid annotation, ViolationInfoHandler validationMsges) {
 
         try {
 
@@ -28,9 +28,8 @@ public class ValidatePattern implements Validate<String, Pattern> {
             }
 
         } catch (Exception ex) {
-            Logger.getLogger(ValidatePattern.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ValidateUuid.class.getName()).log(Level.SEVERE, null, ex);
         }
-
 
         return true;
     }

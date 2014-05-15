@@ -115,7 +115,7 @@ final class ValidatorCache<P> {
         } else {
             prefix = GETTER_METHOD_PREFIX_B;
         }
-        return prefix + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1).toLowerCase();
+        return prefix + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1); //.toLowerCase();
     }
 
     /**
