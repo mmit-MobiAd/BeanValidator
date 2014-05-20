@@ -22,7 +22,7 @@ public class ValidateUuid implements Validate<String, Uuid> {
 
             java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(annotation.pattern());
 
-            if (!pattern.matcher(value).matches()) {
+            if (value == null || !pattern.matcher(value).matches()) {
                 validationMsges.addMessage(method,annotation.message(),value);
                 return false;
             }
