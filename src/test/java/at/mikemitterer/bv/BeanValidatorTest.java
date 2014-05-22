@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,6 +24,20 @@ public class BeanValidatorTest extends Assert {
         final List<ViolationInfo<User>> violationInfos = beanValidator.validate(user);
         assertEquals(1,violationInfos.size());
         assertEquals(violationInfos.get(0).getMessage(),"Name must not be empty");
+    }
+
+    @Test
+    public void testEmptyList() throws Exception {
+        final AreayCodes areayCodes = new AreayCodes();
+        final BeanValidator beanValidator = BeanBeanValidatorImpl.getInstance();
+
+        List<ViolationInfo<AreayCodes>> violationInfos = beanValidator.validate(areayCodes);
+        assertEquals(1,violationInfos.size());
+        assertEquals(violationInfos.get(0).getMessage(),"List must not be empty");
+
+        areayCodes.getCodes().add("6363");
+        violationInfos = beanValidator.validate(areayCodes);
+        assertEquals(0,violationInfos.size());
     }
 
     @Test
@@ -135,6 +150,15 @@ public class BeanValidatorTest extends Assert {
         @VObject(message = "User must be valid")
         public User getUser() {
             return user;
+        }
+    }
+
+    private static class AreayCodes {
+        private final List<String> codes = new ArrayList<String>();
+
+        @NotEmpty(message = "List must not be empty")
+        public List<String> getCodes() {
+            return codes;
         }
     }
 
