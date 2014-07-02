@@ -6,10 +6,10 @@ version = '0.5.0'
 group = 'at.mikemitterer'
 
 /* define the valid syntax level for source files */
-sourceCompatibility = JavaVersion.VERSION_1_6
+//sourceCompatibility = JavaVersion.VERSION_1_6
 
 /* define binary compatiblity version */
-targetCompatibility = JavaVersion.VERSION_1_6
+//targetCompatibility = JavaVersion.VERSION_1_6
 
 buildDir = "target/\${version}/"
 
@@ -54,6 +54,10 @@ dependencies {
     testCompile group: 'log4j', 						name: 'log4j', 					version: log4JVersion
 
     // GUICE
+    compile group: 'com.google.inject',                 name: 'guice',                  version: guiceVersion
+    compile group: 'com.google.inject.extensions',      name: 'guice-assistedinject',   version: guiceVersion
+
+    /*
     testCompile ('com.google.inject:guice:' + guiceVersion +  ':no_aop') {
         exclude module: 'aopalliance'
         exclude module: 'cglib'
@@ -61,6 +65,7 @@ dependencies {
     testCompile('com.google.inject.extensions:guice-assistedinject:' + guiceVersion) {
         exclude module: 'guice'
     }
+    */
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
