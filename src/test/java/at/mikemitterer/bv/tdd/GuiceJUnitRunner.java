@@ -1,17 +1,12 @@
 package at.mikemitterer.bv.tdd;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
-import org.junit.runners.BlockJUnit4ClassRunner;
-import org.junit.runners.model.InitializationError;
-
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
+import org.junit.runners.BlockJUnit4ClassRunner;
+import org.junit.runners.model.InitializationError;
+
+import java.lang.annotation.*;
 
 /**
  * @see <a href="http://goo.gl/2N8tX" target="_blank">JUnit tests made easy with Guice </a>
@@ -53,11 +48,6 @@ public class GuiceJUnitRunner extends BlockJUnit4ClassRunner {
 		injector = createInjectorFor(classes);
 	}
 
-	/**
-	 * @param classes
-	 * @return
-	 * @throws InitializationError
-	 */
 	private Injector createInjectorFor(final Class<?>[] classes) throws InitializationError {
 		final Module[] modules = new Module[classes.length];
 		for (int i = 0; i < classes.length; i++) {

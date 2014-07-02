@@ -21,7 +21,7 @@ public class ValidateMinLength implements Validate<String, MinLength> {
                 return false;
             }
         } else {
-            validationMsg.addMessage(method,aMinLength.message(),value);
+            validationMsg.addMessageForNullPointer(method,aMinLength.message());
             return false;
         }
 

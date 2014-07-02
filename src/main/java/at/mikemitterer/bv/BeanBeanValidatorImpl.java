@@ -37,7 +37,7 @@ public class BeanBeanValidatorImpl implements BeanValidator {
 //
 //        if (!validatorsMap.containsKey(annotation)) {
 //
-//            AValidation iAnnotation = (AValidation) annotation.getAnnotation(AValidation.class);
+//            AValidation iAnnotation = (AValidation) annotation.getAnnotations(AValidation.class);
 //            try {
 //                IValidator validate = (IValidator) iAnnotation.validator().newInstance();
 //                validatorsMap.put(annotation, validate);
@@ -63,8 +63,6 @@ public class BeanBeanValidatorImpl implements BeanValidator {
      * If some field has multiple validation annotation. Which ever first
      * annoation validation beark remaining annotation are not going to
      * validate.
-     * @param obj
-     * @return
      */
 
     @Override
@@ -78,7 +76,7 @@ public class BeanBeanValidatorImpl implements BeanValidator {
 
         for (AnnotationMetaData annotationMetaData : annotationMetaDatas) {
 
-            Annotation[] annotations = annotationMetaData.getAnnotation();
+            Annotation[] annotations = annotationMetaData.getAnnotations();
 
             Object valueObj = null;
             try {

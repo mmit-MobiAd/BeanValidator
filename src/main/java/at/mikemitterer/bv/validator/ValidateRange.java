@@ -17,7 +17,7 @@ public class ValidateRange implements Validate<Number, Range> {
 
 
         if (number == null) {
-            validationMsges.addMessage(method,"Null or " + annotation.message(),number);
+            validationMsges.addMessageForNullPointer(method,"Null or " + annotation.message());
             return false;
         }
 

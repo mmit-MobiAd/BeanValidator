@@ -17,12 +17,12 @@ public class ValidateEmail extends ValidateBasePattern implements Validate<Strin
 
     private static final String  EMAIL_PATTERN =
             "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-    private              Pattern pattern       = Pattern.compile(EMAIL_PATTERN);
+    private final Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 
-    public boolean validate(final AnnotationMetaData method,String email, Email annotation, ViolationInfoHandler validationMsges) {
+    public boolean validate(final AnnotationMetaData method, String email, Email annotation, ViolationInfoHandler validationMsges) {
 
         if (!validatePattern(email, pattern, annotation.mandatory())) {
-            validationMsges.addMessage(method,annotation.message(),email);
+            validationMsges.addMessage(method, annotation.message(), email);
             return false;
         }
 

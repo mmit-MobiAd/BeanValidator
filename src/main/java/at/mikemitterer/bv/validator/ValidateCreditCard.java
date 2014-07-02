@@ -23,15 +23,18 @@ public class ValidateCreditCard extends ValidateBasePattern implements Validate<
     private final static String JCB_PATTERN      = "^(?:2131|1800|35\\d{3})\\d{11}$";
 
     private Pattern      pattern    = null;
-    private StringBuffer patternStr = new StringBuffer();
 
     public ValidateCreditCard() {
+        //noinspection StringBufferReplaceableByString
+        final StringBuffer patternStr = new StringBuffer();
+
         patternStr.append("(" + VISA_PATTERN + ")|(");
         patternStr.append("(" + MASTER_PATTERN + ")|(");
         patternStr.append("(" + AMEX_PATTERN + ")|(");
         patternStr.append("(" + DISCOVER_PATTERN + ")|(");
         patternStr.append("(" + DINERS_PATTERN + ")|(");
         patternStr.append("(" + JCB_PATTERN + ")");
+
         pattern = Pattern.compile(patternStr.toString());
 
     }
@@ -85,11 +88,7 @@ public class ValidateCreditCard extends ValidateBasePattern implements Validate<
             }
         }
 
-        if (((sum) % 10) == 0) {
-            return true;
-        }
-        return false;
-
+        return (sum % 10 == 0);
     }
 
 //    public static void main(String[] args) {

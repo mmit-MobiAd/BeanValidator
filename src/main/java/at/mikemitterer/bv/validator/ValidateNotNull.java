@@ -17,7 +17,7 @@ public class ValidateNotNull implements Validate<Object, NotNull> {
     public boolean validate(final AnnotationMetaData method,Object value, NotNull annotation, ViolationInfoHandler validationMsges) {
 
         if (value == null) {
-            validationMsges.addMessage(method,annotation.message(),value);
+            validationMsges.addMessageForNullPointer(method,annotation.message());
             return false;
         }
 

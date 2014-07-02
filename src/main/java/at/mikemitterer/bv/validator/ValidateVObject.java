@@ -23,7 +23,7 @@ public class ValidateVObject implements Validate<Object, VObject> {
 
         if (value == null) {
             if (annotation.mandatory()) {
-                violationInfoHandler.addMessage(annotationMetaData, annotation.message(), value);
+                violationInfoHandler.addMessageForNullPointer(annotationMetaData, annotation.message());
                 return false;
             }
             return true;

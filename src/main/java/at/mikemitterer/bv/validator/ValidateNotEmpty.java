@@ -20,7 +20,7 @@ public class ValidateNotEmpty implements Validate<Object, NotEmpty> {
     public boolean validate(final AnnotationMetaData method, Object value, NotEmpty annotation, ViolationInfoHandler validationMsges) {
 
         if (value == null) {
-            validationMsges.addMessage(method, annotation.message(), value);
+            validationMsges.addMessageForNullPointer(method, annotation.message());
             return false;
         }
 

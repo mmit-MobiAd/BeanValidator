@@ -16,12 +16,12 @@ import java.util.regex.Pattern;
 public class ValidatePhoneUS extends ValidateBasePattern implements Validate<String, PhoneUS> {
 
     private static final String  PHONE_PATTERN = "^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$";
-    private static       Pattern pattern       = Pattern.compile(PHONE_PATTERN);
+    private static final Pattern pattern = Pattern.compile(PHONE_PATTERN);
 
-    public boolean validate(final AnnotationMetaData method,String phone, PhoneUS annotation, ViolationInfoHandler validationMsges) {
+    public boolean validate(final AnnotationMetaData method, String phone, PhoneUS annotation, ViolationInfoHandler validationMsges) {
 
         if (!validatePattern(phone, pattern, annotation.mandatory())) {
-            validationMsges.addMessage(method,annotation.message(),phone);
+            validationMsges.addMessage(method, annotation.message(), phone);
             return false;
         }
 

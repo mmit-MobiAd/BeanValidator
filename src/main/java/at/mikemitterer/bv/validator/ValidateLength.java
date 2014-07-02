@@ -22,7 +22,7 @@ public class ValidateLength implements Validate<String, Length> {
             }
 
         } else {
-            validationMsges.addMessage(method,annotation.message(),value);
+            validationMsges.addMessageForNullPointer(method,annotation.message());
             return false;
         }
 

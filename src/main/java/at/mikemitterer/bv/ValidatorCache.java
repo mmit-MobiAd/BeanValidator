@@ -26,17 +26,7 @@ import java.util.Map;
  * @author Jiren
  */
 final class ValidatorCache<P> {
-    private static Logger logger = LoggerFactory.getLogger(ValidatorCache.class.getSimpleName());
-
-    /**
-     * Getter method prefix for all primitive and non-premitive datatype except
-     * 'boolean' primitive data type
-     */
-    private static String GETTER_METHOD_PREFIX   = "get";
-    /**
-     * Getter method prefix for 'boolean' datatype.
-     */
-    private static String GETTER_METHOD_PREFIX_B = "is";
+    private static final Logger logger = LoggerFactory.getLogger(ValidatorCache.class.getSimpleName());
 
     /**
      * Map of Class name to  fileds annotations and their reflected getter method array.
@@ -46,7 +36,7 @@ final class ValidatorCache<P> {
     /**
      * Annotation to Custome validator instance map.
      */
-    private static HashMap<Class<? extends Annotation>, Validate> validatorsMap = new HashMap<Class<? extends Annotation>, Validate>();
+    private static final HashMap<Class<? extends Annotation>, Validate> validatorsMap = new HashMap<Class<? extends Annotation>, Validate>();
 
 
     private ValidatorCache() {
@@ -69,15 +59,9 @@ final class ValidatorCache<P> {
 
     /**
      * Check the annotation is AValidation type.
-     *
-     * @param annotation
-     * @return
      */
     public static boolean isAValidation(Class<? extends Annotation> annotation) {
-        if (annotation.isAnnotationPresent(Constraint.class)) {
-            return true;
-        }
-        return false;
+        return annotation.isAnnotationPresent(Constraint.class);
     }
 
 
@@ -92,29 +76,33 @@ final class ValidatorCache<P> {
     // private
     // --------------------------------------------------------------------------------------------
 
-    /**
-     * Get field Get Method name.
-     *
-     * @param fieldName
-     * @return
-     */
-    private static String getGetMethod(String fieldName) {
-        return GETTER_METHOD_PREFIX + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-    }
+    // private static String getGetMethod(String fieldName) {
+    //    return GETTER_METHOD_PREFIX + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+    // }
+
 
     /**
      * Get field Get Method name.
      */
     private static String getGetMethod(Field field) {
+        // Getter method prefix for all primitive and non-premitive datatype except
+        // 'boolean' primitive data type
+        final String GETTER_METHOD_PREFIX = "get";
 
-        String prefix = null;
+        // Getter method prefix for 'boolean' datatype.
+        final String GETTER_METHOD_PREFIX_B = "is";
+
+        String prefix;
         String fieldName = field.getName();
 
         if (field.getType() != boolean.class) {
             prefix = GETTER_METHOD_PREFIX;
+
         } else {
+
             prefix = GETTER_METHOD_PREFIX_B;
         }
+
         return prefix + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1); //.toLowerCase();
     }
 
@@ -156,8 +144,6 @@ final class ValidatorCache<P> {
      * @param annotation
      */
     private static void registerValidator(Annotation annotation) {
-
-
         Class vAnnotationClass = annotation.annotationType();
         try {
             Constraint constraint = (Constraint) vAnnotationClass.getAnnotation(Constraint.class);
