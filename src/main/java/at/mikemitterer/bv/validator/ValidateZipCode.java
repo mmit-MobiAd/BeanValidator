@@ -17,12 +17,12 @@ public class ValidateZipCode extends ValidateBasePattern implements Validate<Str
 
     //Format : XXXXX
     private static final String  ZIP_PATTERN = "\\d{5}(-\\d{4})?";
-    private              Pattern pattern     = Pattern.compile(ZIP_PATTERN);
+    private final Pattern pattern = Pattern.compile(ZIP_PATTERN);
 
-    public boolean validate(final AnnotationMetaData method,String zipCode, ZipCode aZipCode, ViolationInfoHandler validationMsges) {
+    public boolean validate(final AnnotationMetaData method, String zipCode, ZipCode aZipCode, ViolationInfoHandler validationMsges) {
 
         if (!validatePattern(zipCode, pattern, aZipCode.mandatory())) {
-            validationMsges.addMessage(method,aZipCode.message(),zipCode);
+            validationMsges.addMessage(method, aZipCode.message(), zipCode);
             return false;
         }
 

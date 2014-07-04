@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 
@@ -19,7 +18,7 @@ import java.util.List;
  * @author Jiren
  */
 public class BeanBeanValidatorImpl implements BeanValidator {
-    private static Logger logger = LoggerFactory.getLogger(BeanBeanValidatorImpl.class.getSimpleName());
+    private static final Logger logger = LoggerFactory.getLogger(BeanBeanValidatorImpl.class.getSimpleName());
 
     private static final Object[] EMPTY_CLASS_ARRAY = new Object[0];
 
@@ -67,7 +66,7 @@ public class BeanBeanValidatorImpl implements BeanValidator {
 
     @Override
     public<T> List<ViolationInfo<T>> validate(final T obj) {
-        final ViolationInfoHandler<T> validationMsg = new ViolationInfoHandler<T>(obj);
+        final ViolationInfoHandler<T> validationMsg = new ViolationInfoHandler<>(obj);
 
         AnnotationMetaData[] annotationMetaDatas = ValidatorCache.getFields(obj);
         if (annotationMetaDatas == null) {
@@ -81,30 +80,20 @@ public class BeanBeanValidatorImpl implements BeanValidator {
             Object valueObj = null;
             try {
                 valueObj = annotationMetaData.getMethod().invoke(obj, EMPTY_CLASS_ARRAY);
-            } catch (IllegalAccessException ex) {
-                logger.error("validate failed, Error: {}", ex.toString());
-
-            } catch (IllegalArgumentException ex) {
-                logger.error("validate failed, Error: {}", ex.toString());
-
-            } catch (InvocationTargetException ex) {
-                logger.error("validate failed, Error: {}", ex.toString());
-
             } catch (Exception ex) {
                 logger.error("validate failed, Error: {}", ex.toString());
             }
 
             for (Annotation annotation : annotations) {
 
-                Validate iValidate = ValidatorCache.getValidator(annotation);
+                Validate validator = ValidatorCache.getValidator(annotation);
 
-                if (iValidate != null) {
+                if (validator != null) {
                     try {
-
-                        if (!iValidate.validate(annotationMetaData, valueObj, annotation, validationMsg)) {
+                        //noinspection unchecked
+                        if (!validator.validate(annotationMetaData, valueObj, annotation, validationMsg)) {
                             break;
                         }
-
 
                     } catch (Exception ex) {
                         logger.error("validate failed, Error: {}", ex.toString());

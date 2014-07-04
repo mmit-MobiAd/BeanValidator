@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 public class ValidatePhone extends ValidateBasePattern implements Validate<String, Phone> {
 
     private static final String  PHONE_PATTERN = "^\\+[0-9]{2,3}[0-9 -]{6,}$";
-    private static       Pattern pattern       = Pattern.compile(PHONE_PATTERN);
+    private static final Pattern pattern = Pattern.compile(PHONE_PATTERN);
 
     public boolean validate(final AnnotationMetaData method, String phone, Phone annotation, ViolationInfoHandler validationMsges) {
 

@@ -24,7 +24,7 @@ abstract class ValidateBasePattern {
             } else if (input.trim().isEmpty()) {
                 return true;
             }
-        } else if (mandatory) {
+        } else {
             if (input == null) {
                 return false;
             }

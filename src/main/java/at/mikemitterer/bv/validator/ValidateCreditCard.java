@@ -26,7 +26,7 @@ public class ValidateCreditCard extends ValidateBasePattern implements Validate<
 
     public ValidateCreditCard() {
         //noinspection StringBufferReplaceableByString
-        final StringBuffer patternStr = new StringBuffer();
+        final StringBuilder patternStr = new StringBuilder();
 
         patternStr.append("(" + VISA_PATTERN + ")|(");
         patternStr.append("(" + MASTER_PATTERN + ")|(");

@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class ViolationInfoHandler<T> {
 
-    private final List<ViolationInfo<T>> violationInfos = new ArrayList<ViolationInfo<T>>();
+    private final List<ViolationInfo<T>> violationInfos = new ArrayList<>();
     private final T rootBean;
 
     public ViolationInfoHandler(final T rootBean) {
@@ -22,15 +22,15 @@ public class ViolationInfoHandler<T> {
     }
 
     public void addMessage(final AnnotationMetaData method, final String message, final Object invalidValue) {
-        violationInfos.add(new ViolationInfoImpl<T>(rootBean, method.getMethod().getName(), message, invalidValue));
+        violationInfos.add(new ViolationInfoImpl<>(rootBean, method.getMethod().getName(), message, invalidValue));
     }
 
     public void addMessage(final String methodName, final String message,final Object invalidValue) {
-        violationInfos.add(new ViolationInfoImpl<T>(rootBean,methodName, message, invalidValue));
+        violationInfos.add(new ViolationInfoImpl<>(rootBean,methodName, message, invalidValue));
     }
 
     public void addMessageForNullPointer(final AnnotationMetaData method, final String message) {
-        violationInfos.add(new ViolationInfoImpl<T>(rootBean,method.getMethod().getName(), message, null ));
+        violationInfos.add(new ViolationInfoImpl<>(rootBean,method.getMethod().getName(), message, null ));
     }
 
     public List<ViolationInfo<T>> getViolationInfos() {
