@@ -5,6 +5,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * User: mikemitterer, Date: 25.10.13, Time: 10:50
+ *
+ * Wenn in der "message" der Platzhaler %value% vorkommt wird dieser PH durch den Wert
+ * von invalidValue ersetzt
  */
 class ViolationInfoImpl<T> implements ViolationInfo<T> {
     @SuppressWarnings("unused")

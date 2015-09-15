@@ -1,82 +1,50 @@
-apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: 'idea'
+//-------------------------------------------------------------------------------------------------
+// BeanValidator - build
+//-------------------------------------------------------------------------------------------------
 
-version = gitExtendedVersion() // version = '0.5.0'
-group = 'at.mikemitterer'
+version = gitExtendedVersion() // Sample: 0.5.4-19
+buildDir = "target/${version}/"
 
-/* define the valid syntax level for source files */
-//sourceCompatibility = JavaVersion.VERSION_1_6
+jar {
+    dependsOn "test"
+    baseName = baseName.toLowerCase()
+}
 
-/* define binary compatiblity version */
-//targetCompatibility = JavaVersion.VERSION_1_6
-
-buildDir = "target/\${version}/"
+sourcesJar { baseName = baseName.toLowerCase() }
+javadocJar { baseName = baseName.toLowerCase() }
 
 configurations {
     toPublicRepo
 }
 
-jar {
-	baseName = baseName.toLowerCase()
-}
-
 //-------------------------------------------------------------------------------------------------
 // Library Versions
 
-ext {
-    slf4jVersion 				= "1.6.4"
-    commonsLang3Version			= "3.1"
-    commonsCollection			= "3.2.1"
-    guiceVersion				= "3.0"
-    jodaTimeVersion				= "2.2"
-
-    // Unit-Tests
-    junitVersion				= "4.11"
-    mockitoVersion				= "1.9.5"
-    log4JVersion				= "1.2.16"
-}
-
-repositories { /* Werden in init.gradle gesetzt */ }
-
 dependencies {
-	compile 	group: 'org.slf4j',                     name: 'slf4j-api',              version: slf4jVersion
-	//compile 	group: 'org.apache.commons',            name: 'commons-lang3',          version: commonsLang3Version
-    //compile     group: 'commons-collections', 		    name: 'commons-collections', 	version: commonsCollection
-    //compile     group: 'joda-time', 				    name: 'joda-time', 				version: jodaTimeVersion
 
-    //compile     group: 'org.slf4j',                   name: 'slf4j-log4j12',          version: slf4jVersion
-    //compile     group: 'log4j', 						name: 'log4j', 					version: log4JVersion
+    // Logging ---------------------------------------------------------------------------------------------------------
+    compile 	group: 'org.slf4j',                     name: 'slf4j-api',              version: slf4jVersion
 
-	testCompile group: 'junit',                         name: 'junit',                  version: junitVersion
-    testCompile group: 'org.mockito', 					name: 'mockito-all', 			version: mockitoVersion
-	testCompile group: 'org.slf4j',                     name: 'slf4j-log4j12',          version: slf4jVersion
+    // Apache ----------------------------------------------------------------------------------------------------------
+
+
+    // Google ----------------------------------------------------------------------------------------------------------
+    compile     group: 'com.google.inject', 		    name: 'guice', 					version: guiceVersion
+    compile     group: 'com.google.inject.extensions',  name: 'guice-assistedinject',   version: guiceVersion
+
+    // Rest + Servlet --------------------------------------------------------------------------------------------------
+
+    // Eigene libs -----------------------------------------------------------------------------------------------------
+
+    // Sonstiges -------------------------------------------------------------------------------------------------------
+
+    // Test ------------------------------------------------------------------------------------------------------------
+
+    testCompile group: 'junit',                         name: 'junit',                  version: junitVersion
+    testCompile group: 'org.slf4j',                     name: 'slf4j-log4j12',          version: slf4jVersion
     testCompile group: 'log4j', 						name: 'log4j', 					version: log4JVersion
+    testCompile group: 'org.mockito', 					name: 'mockito-all', 			version: mockitoVersion
 
-    // GUICE
-    compile group: 'com.google.inject',                 name: 'guice',                  version: guiceVersion
-    compile group: 'com.google.inject.extensions',      name: 'guice-assistedinject',   version: guiceVersion
-
-    /*
-    testCompile ('com.google.inject:guice:' + guiceVersion +  ':no_aop') {
-        exclude module: 'aopalliance'
-        exclude module: 'cglib'
-    }
-    testCompile('com.google.inject.extensions:guice-assistedinject:' + guiceVersion) {
-        exclude module: 'guice'
-    }
-    */
-}
-
-task sourcesJar(type: Jar, dependsOn: classes) {
-	classifier 'sources'
-    //baseName = baseName.toLowerCase()
-	from sourceSets.main.allSource
-}
-
-task javadocJar(type: Jar, dependsOn:javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
 }
 
 artifacts {
@@ -86,9 +54,6 @@ artifacts {
     archives sourcesJar
     archives javadocJar
 	}
-
-// Intern (private)
-uploadArchives { /* Wird in init.gradle gesetzt */ }
 
 // JAR + Source
 uploadToPublicRepo {
