@@ -54,7 +54,7 @@ public class BeanValidatorTest extends Assert {
 
     @Test
     @SuppressWarnings("Duplicates")
-    public void testMinLenght() throws Exception {
+    public void testMinLength() throws Exception {
         final User user = new User("Joe", "joe@test.com", "+43 4562 282872-4");
 
         final BeanValidator beanValidator = BeanBeanValidatorImpl.getInstance();
