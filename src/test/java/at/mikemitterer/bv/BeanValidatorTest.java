@@ -28,10 +28,10 @@ public class BeanValidatorTest extends Assert {
 
     @Test
     public void testEmptyList() throws Exception {
-        final AreayCodes areayCodes = new AreayCodes();
+        final AreaCodes areayCodes = new AreaCodes();
         final BeanValidator beanValidator = BeanBeanValidatorImpl.getInstance();
 
-        List<ViolationInfo<AreayCodes>> violationInfos = beanValidator.validate(areayCodes);
+        List<ViolationInfo<AreaCodes>> violationInfos = beanValidator.validate(areayCodes);
         assertEquals(1,violationInfos.size());
         assertEquals(violationInfos.get(0).getMessage(),"List must not be empty");
 
@@ -129,6 +129,32 @@ public class BeanValidatorTest extends Assert {
         assertTrue(found);
     }
 
+    @Test
+    public void testUsernamePassword() throws Exception {
+        final BeanValidator beanValidator = BeanBeanValidatorImpl.getInstance();
+
+        List<ViolationInfo<LoginPassword>> violationInfos;
+
+        violationInfos = beanValidator.validate(new LoginPassword("office@mikemitterer.at","12345678aA#"));
+        assertEquals(0,violationInfos.size());
+
+        violationInfos = beanValidator.validate(new LoginPassword("office@mikemitterer.at","12345678aA@"));
+        assertEquals(0,violationInfos.size());
+
+        violationInfos = beanValidator.validate(new LoginPassword("office@mikemitterer.at","12345678aA;"));
+        assertEquals(1,violationInfos.size());
+
+        violationInfos = beanValidator.validate(new LoginPassword("office#mikemitterer.at","12345678aA;"));
+        assertEquals(2,violationInfos.size());
+
+        violationInfos = beanValidator.validate(new LoginPassword("office@mikemitterer.at","5678aA#"));
+        assertEquals(1,violationInfos.size());
+
+        violationInfos = beanValidator.validate(new LoginPassword("office@mikemitterer.at","12345678abcdefA#"));
+        assertEquals(1,violationInfos.size());
+
+    }
+
     // --------------------------------------------------------------------------------------------
     // private
     // --------------------------------------------------------------------------------------------
@@ -153,7 +179,7 @@ public class BeanValidatorTest extends Assert {
         }
     }
 
-    private static class AreayCodes {
+    private static class AreaCodes {
         private final List<String> codes = new ArrayList<String>();
 
         @NotEmpty(message = "List must not be empty")
@@ -201,7 +227,7 @@ public class BeanValidatorTest extends Assert {
         public String userID;
 
         @NotEmpty(message = "Name must not be empty")
-        @MinLength(value = 4, message = "Name lenght must be at least 4 characters...")
+        @MinLength(value = 4, message = "Name length must be at least 4 characters...")
         public final String name;
 
         private final String eMail;
@@ -249,5 +275,26 @@ public class BeanValidatorTest extends Assert {
 //        public int getAge() {
 //            return super.getAge();
 //        }
+    }
+
+    private static class LoginPassword {
+
+        private final String username;
+        private final String password;
+
+        public LoginPassword(final String username, final String password) {
+            this.username = username;
+            this.password = password;
+        }
+
+        @Email(message = "%value% is not a valid eMail address")
+        public String getUsername() {
+            return username;
+        }
+
+        @Password(message = "%value% is not a valid password")
+        public String getPassword() {
+            return password;
+        }
     }
 }
