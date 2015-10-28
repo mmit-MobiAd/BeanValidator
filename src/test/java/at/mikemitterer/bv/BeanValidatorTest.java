@@ -53,6 +53,7 @@ public class BeanValidatorTest extends Assert {
     }
 
     @Test
+    @SuppressWarnings("Duplicates")
     public void testMinLenght() throws Exception {
         final User user = new User("Joe", "joe@test.com", "+43 4562 282872-4");
 
@@ -60,7 +61,7 @@ public class BeanValidatorTest extends Assert {
 
         final List<ViolationInfo<User>> violationInfos = beanValidator.validate(user);
         assertEquals(1,violationInfos.size());
-        assertEquals(violationInfos.get(0).getMessage(),"Name lenght must be at least 4 characters...");
+        assertEquals(violationInfos.get(0).getMessage(),"Name length must be at least 4 characters...");
     }
 
     @Test
