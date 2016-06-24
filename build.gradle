@@ -48,6 +48,9 @@ dependencies {
     testCompile group: 'log4j', 						name: 'log4j', 					version: log4JVersion
     testCompile group: 'org.mockito', 					name: 'mockito-all', 			version: mockitoVersion
 
+    testCompile group: 'com.google.inject', 		    name: 'guice', 					version: guiceVersion
+    testCompile group: 'com.google.inject.extensions',  name: 'guice-assistedinject',   version: guiceVersion
+
 }
 
 artifacts {
