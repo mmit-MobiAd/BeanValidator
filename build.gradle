@@ -6,7 +6,7 @@ sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
 
 version = gitExtendedVersion() // Sample: 0.5.4-19
-buildDir = "target/${version}/"
+buildDir = "target"
 
 jar {
     dependsOn "test"
@@ -32,8 +32,8 @@ dependencies {
 
 
     // Google ----------------------------------------------------------------------------------------------------------
-    compile     group: 'com.google.inject', 		    name: 'guice', 					version: guiceVersion
-    compile     group: 'com.google.inject.extensions',  name: 'guice-assistedinject',   version: guiceVersion
+    compileOnly     group: 'com.google.inject', 		    name: 'guice', 					version: guiceVersion
+    compileOnly     group: 'com.google.inject.extensions',  name: 'guice-assistedinject',   version: guiceVersion
 
     // Rest + Servlet --------------------------------------------------------------------------------------------------
 
