@@ -1,6 +1,7 @@
 //-------------------------------------------------------------------------------------------------
 // BeanValidator - build
 //-------------------------------------------------------------------------------------------------
+apply from: "../maven.gradle"
 
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
@@ -65,8 +66,9 @@ artifacts {
 uploadToPublicRepo {
 	repositories {
 		mavenDeployer {
-			// My local Maven repository
-			repository(url: uri("file:///Volumes/programming/Maven/public.maven.repository/"))
+            // My local Maven repository (wird in maven.gradle gesetzt) und
+            // mit apply from: "../maven.gradle" eingebunden
+            repository(url: uri(project.private_repo))
 		}
 	}
 }
