@@ -72,3 +72,21 @@ uploadToPublicRepo {
 		}
 	}
 }
+
+//-------------------------------------------------------------------------------------------------
+// Final arbeiten für dieses JAR
+
+task deploy(
+        group: 'BeanValidator',
+        description: "Deploys Archive",
+        dependsOn: [
+                jar, 
+                uploadArchives
+        ]
+) {
+    doLast {
+        logger.lifecycle("\nSuccessfully deployed ${jar.baseName} - V ${version}")
+    }
+}
+
+
