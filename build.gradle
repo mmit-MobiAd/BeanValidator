@@ -1,25 +1,26 @@
 //-------------------------------------------------------------------------------------------------
 // BeanValidator - build
 //-------------------------------------------------------------------------------------------------
-apply from: "../maven.gradle"
+//apply from: "../maven.gradle"
 
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
 
-version = gitExtendedVersion() // Sample: 0.5.4-19
-buildDir = "target"
+//version = gitExtendedVersion() // Sample: 0.5.4-19
+//buildDir = "target"
 
 jar {
     dependsOn "test"
-    baseName = baseName.toLowerCase()
+    // baseName = baseName.toLowerCase()
 }
 
-sourcesJar { baseName = baseName.toLowerCase() }
-javadocJar { baseName = baseName.toLowerCase() }
+//sourcesJar { baseName = baseName.toLowerCase() }
+//javadocJar { baseName = baseName.toLowerCase() }
 
-configurations {
-    toPublicRepo
-}
+//configurations {
+//    toPublicRepo
+////    published
+//}
 
 //-------------------------------------------------------------------------------------------------
 // Library Versions
@@ -54,24 +55,43 @@ dependencies {
 
 }
 
-artifacts {
-	toPublicRepo jar
-	toPublicRepo sourcesJar
+//configurations {
+//    toPublicRepo
+//}
 
-    archives sourcesJar
-    archives javadocJar
-	}
+//artifacts {
+//	//toPublicRepo "jar"
+//	toPublicRepo sourcesJar
+//    toPublicRepo javadocJar
+//
+////    published jar
+////    published sourcesJar
+////    published javadocJar
+////
+////    archives sourcesJar
+////    archives javadocJar
+//	}
 
-// JAR + Source
-uploadToPublicRepo {
-	repositories {
-		mavenDeployer {
-            // My local Maven repository (wird in maven.gradle gesetzt) und
-            // mit apply from: "../maven.gradle" eingebunden
-            repository(url: uri(project.private_repo))
-		}
-	}
-}
+//artifacts {
+//    archives sourcesJar
+//    archives javadocJar
+//    archives jar
+//	}
+
+//
+//// JAR + Source
+//uploadToPublicRepo {
+//	repositories {
+//		mavenDeployer {
+//            // My local Maven repository (wird in maven.gradle gesetzt) und
+//            // mit apply from: "../maven.gradle" eingebunden
+//            repository(url: uri(project.private_repo))
+//		}
+//	}
+//}
+//
+
+
 
 //-------------------------------------------------------------------------------------------------
 // Final arbeiten für dieses JAR
@@ -80,8 +100,8 @@ task deploy(
         group: 'BeanValidator',
         description: "Deploys Archive",
         dependsOn: [
-                jar, 
-                uploadArchives
+                jar,
+                'publishToLocalMavenRepo' /*uploadArchives*/
         ]
 ) {
     doLast {
