@@ -42,10 +42,12 @@ dependencies {
     // Sonstiges -------------------------------------------------------------------------------------------------------
 
     // Test ------------------------------------------------------------------------------------------------------------
+    testImplementation group: "org.junit.jupiter", name: "junit-jupiter-api", version: version_junit5
+    testImplementation group: "org.junit.jupiter", name: "junit-jupiter-params", version: version_junit5
+    testImplementation group: "org.junit.jupiter", name: "junit-jupiter-engine", version: version_junit5
 
-    testImplementation group: 'junit',                         name: 'junit',                  version: version_junit
-    testImplementation group: 'org.slf4j',                     name: 'slf4j-log4j12',          version: version_slf4j
-    testImplementation group: 'log4j', 						name: 'log4j', 					version: version_log4J
+    testImplementation group: "ch.qos.logback", name: "logback-classic", version: version_logback
+
     testImplementation group: 'org.mockito', 					name: 'mockito-all', 			version: version_mockito
 
     testImplementation group: 'com.google.inject', 		    name: 'guice', 					version: version_guice

@@ -1,18 +1,21 @@
 package at.mikemitterer.bv;
 
 import at.mikemitterer.bv.constraints.*;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+
 /**
  * User: mikemitterer, Date: 28.10.13, Time: 09:02
  */
-public class BeanValidatorTest extends Assert {
+public class BeanValidatorTest  {
     @SuppressWarnings("unused")
     private static Logger logger = LoggerFactory.getLogger(BeanValidatorTest.class.getSimpleName());
 
