@@ -1,0 +1,16 @@
+pipeline {
+    agent { label 'linux' }
+
+    stages {
+        stage('Test') {
+            steps {
+                sh 'gradle clean test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'gradle deploy'
+            }
+        }
+    }
+}
